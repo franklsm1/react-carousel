@@ -10,7 +10,6 @@ let app;
 let div;
 
 beforeEach(() => {
-    console.log("Before each being called----------------------------------------------")
     fetchMock
         .mock('https://www.reddit.com/r/funny.json', mockJson);
     div = document.createElement('div');
@@ -19,29 +18,23 @@ beforeEach(() => {
 
 afterEach(() => {
     fetchMock.restore();
-})
+});
 
 it('renders without crashing', () => {
     div = document.createElement('div');
     ReactDOM.render(<App />, div);
 });
 
-it('retrieves json payload', () => {
+it('retrieves json payload and creates a carousel', () => {
+    app.node._self.componentWillMount()
+        .then(() => {
+            expect(fetchMock.done()).toBeTruthy();
+            expect(app.state().posts[0]).toBe(mockJson.data.children[0]);
 
-    // app.node._self.loadJson()
-    //     .then(() => {
-    //         expect(fetchMock.done()).toBeTruthy();
-    //         expect(app.state.response).toBe(mockJson);
-    //         console.log(app.state.response);
-    //
-    //     })
-
+            let carousel = app.find(Carousel.name);
+            expect(carousel.props().posts).toHaveLength(3);
+        })
+        .catch(error => {
+          console.log(error);
+        });
 });
-
-it('testing to see if carousel is present', () => {
-    let carousel = app.find(Carousel.name);
-    expect(carousel.props().posts).toHaveLength(1);
-
-});
-
-

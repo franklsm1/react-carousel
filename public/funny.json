@@ -1,21 +1,24 @@
 {
   "data": {
     "children": [
-      {
+      {"data": {
         "author": "Larry and Sean",
         "thumbnail": "https://test.com",
         "score": 800
-      },
-      {
+      }
+    },
+      {"data":{
         "author": "Larry",
         "thumbnail": "https://test2.com",
         "score": 800
-      },
-      {
+      }
+    },
+      {"data": {
         "author": "Sean",
         "thumbnail": "https://test3.com",
         "score": 800
       }
+    }
     ]
   }
 }
